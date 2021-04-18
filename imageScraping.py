@@ -11,7 +11,8 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
     def scroll_to_end(wd):
         wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(sleep_between_interactions)    
-    
+        print("hello")
+        
     # build the google query
     search_url = "https://opensea.io/assets/{q}"
     # load the page
