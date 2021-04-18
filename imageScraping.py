@@ -11,7 +11,6 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
     def scroll_to_end(wd):
         wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(sleep_between_interactions)    
-        print("hello")
         
     # build the google query
     search_url = "https://opensea.io/assets/{q}"
@@ -25,21 +24,22 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
         scroll_to_end(wd)
 
         # get all image thumbnail results
-        thumbnail_results = wd.find_elements_by_css_selector("img.Q4LuWd")
+        thumbnail_results = wd.find_elements_by_class_name("Image--image")
         number_results = len(thumbnail_results)
         
         print(f"Found: {number_results} search results. Extracting links from {results_start}:{number_results}")
         
+        
         for img in thumbnail_results[results_start:number_results]:
             # try to click every thumbnail such that we can get the real image behind it
             try:
-                img.click()
+            #    img.click()
                 time.sleep(sleep_between_interactions)
             except Exception:
                 continue
 
             # extract image urls    
-            actual_images = wd.find_elements_by_css_selector('img.n3VNCb')
+            actual_images = wd.find_elements_by_class_name("Image--image")
             for actual_image in actual_images:
                 if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
                     image_urls.add(actual_image.get_attribute('src'))
@@ -59,7 +59,8 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
 
         # move the result startpoint further down
         results_start = len(thumbnail_results)
-
+        
+        
     return image_urls
 
 
