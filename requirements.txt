@@ -1,0 +1,4 @@
+pillow>=8.2.0
+python>=3.9.0
+requests>=2.5
+selenium>=3.14
