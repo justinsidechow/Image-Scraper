@@ -9,8 +9,7 @@ import hashlib
 
 def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_between_interactions:int=1):
     def scroll_to_end(wd):
-<<<<<<< HEAD
-        scroll_pause_time = 3 # You can set your own pause time. My laptop is a bit slow so I use 1 sec
+        scroll_pause_time = 3 # set your own pause time, depending on how fast your images load, could take hours if thousands of images
         screen_height = wd.execute_script("return window.screen.height;")   # get the screen height of the web
         i = 1
         
@@ -26,20 +25,11 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
             # Break the loop when the height we need to scroll to is larger than the total scroll height
             if (screen_height) * i > scroll_height:
                 break
-=======
-        wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(sleep_between_interactions)    
->>>>>>> f91bc3b832797b976262e2a7af2dfdb4ed0827ee
         
-    # build the google query
     search_url = "https://opensea.io/assets/{q}"
-    # load the page
+    
     wd.get(search_url.format(q=query))
-<<<<<<< HEAD
     wd.maximize_window()
-=======
-
->>>>>>> f91bc3b832797b976262e2a7af2dfdb4ed0827ee
     image_urls = set()
     image_count = 0
     results_start = 0
@@ -52,10 +42,6 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
         
         print(f"Found: {number_results} search results. Extracting links from {results_start}:{number_results}")
         
-<<<<<<< HEAD
-=======
-        
->>>>>>> f91bc3b832797b976262e2a7af2dfdb4ed0827ee
         for img in thumbnail_results[results_start:number_results]:
             # try to click every thumbnail such that we can get the real image behind it
             try:
@@ -85,12 +71,6 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
 
         # move the result startpoint further down
         results_start = len(thumbnail_results)
-<<<<<<< HEAD
-
-=======
-        
-        
->>>>>>> f91bc3b832797b976262e2a7af2dfdb4ed0827ee
     return image_urls
 
 
@@ -111,11 +91,7 @@ def persist_image(folder_path:str,url:str):
     except Exception as e:
         print(f"ERROR - Could not save {url} - {e}")
 
-<<<<<<< HEAD
-def search_and_download(search_term:str,driver_path:str,target_path='C:/Users/justi/OneDrive/Desktop/secret sauce/programming/Image-Scrapper-Base/images/',number_images=1):
-=======
-def search_and_download(search_term:str,driver_path:str,target_path='/Users/halfamotorcycle/Desktop/imageScrapped/images/',number_images=5):
->>>>>>> f91bc3b832797b976262e2a7af2dfdb4ed0827ee
+def search_and_download(search_term:str,driver_path:str,target_path='path to where you want to save your images',number_images=1):
     target_folder = os.path.join(target_path,'_'.join(search_term.lower().split(' ')))
 
     if not os.path.exists(target_folder):
@@ -130,15 +106,8 @@ def search_and_download(search_term:str,driver_path:str,target_path='/Users/half
 # This is the path I use
 # DRIVER_PATH = '.../Desktop/Scraping/chromedriver 2'
 # Put the path for your ChromeDriver here
-<<<<<<< HEAD
-DRIVER_PATH = 'C:/Users/justi/OneDrive/Desktop/secret sauce/programming/Image-Scrapper-Base/chromedriver'
+DRIVER_PATH = 'chromedriver path'
 wd = webdriver.Chrome(executable_path=DRIVER_PATH)
 
-search_term = 'cryptopunks'
-=======
-DRIVER_PATH = '/Users/halfamotorcycle/Desktop/imageScrapped/chromedriver'
-wd = webdriver.Chrome(executable_path=DRIVER_PATH)
-
-search_term = 'pixel-cats'
->>>>>>> f91bc3b832797b976262e2a7af2dfdb4ed0827ee
+search_term = 'NFT search word'
 search_and_download(search_term, DRIVER_PATH)
